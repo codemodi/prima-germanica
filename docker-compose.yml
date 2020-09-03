@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+   app:
+       build: .
+       container_name: primagermanica-app
+       command: python primagermanica/manage.py runserver 0.0.0.0:8000
+       restart: always
+       volumes:
+           - .:/app
+       ports:
+           - "8000:8000"
+             #       depends_on:
+             #           - db
+       environment:
+           - DEBUG=True
+    
+#    db:
+#       image:
+#       container_name: primagermanica-db
+
+
