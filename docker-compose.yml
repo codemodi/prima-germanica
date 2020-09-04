@@ -1,22 +1,29 @@
-version: '3'
+version: '3.7'
 
 services:
-   app:
-       build: .
-       container_name: primagermanica-app
-       command: python manage.py runserver 0.0.0.0:8000
-       restart: always
-       volumes:
-           - .:/app
-       ports:
-           - "8000:8000"
-             #       depends_on:
-             #           - db
-       environment:
-           - DEBUG=True
-    
-#    db:
-#       image:
-#       container_name: primagermanica-db
+  # app:
+  #   build: .
+  #   container_name: primagermanica-app
+  #   command: python manage.py runserver 0.0.0.0:8080
+  #   restart: always
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #      - dynamodb
+  #  environment:
+  #      - DEBUG=True
 
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamodb
+    ports:
+      - "8000:8000"
+
+  redis:
+    image: redis
+    container_name: primagermanica-redis
+    ports:
+      - "6379:6379"
 
