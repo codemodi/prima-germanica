@@ -8,18 +8,20 @@ from primagermanica.base.models import Transaction
 
 
 class ArtistView(APIView):
+    cache_ttl = 7*24*60*60
 
     def get(self, request):
         cache_qs = request.GET.get('cache')
         name_qs = request.GET.get('q')
         if cache_qs and cache_qs.lower() == 'false':
             payload = search_songs(name_qs)
+            cache.set(name_qs, payload, timeout=self.cache_ttl)
             return Response(payload)
 
         payload = cache.get(name_qs)
         if not payload:
             payload = search_songs(name_qs)
-            cache.set(name_qs, payload)
+            cache.set(name_qs, payload, timeout=self.cache_ttl)
 
         return Response(payload)
 
