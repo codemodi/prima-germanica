@@ -11,6 +11,7 @@ djangorestframework = "*"
 gunicorn = "*"
 requests = "*"
 pynamodb = "*"
+django-redis = "*"
 
 [requires]
 python_version = "3.8"
